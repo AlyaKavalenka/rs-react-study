@@ -9,9 +9,9 @@ module.exports = {
     'airbnb/hooks',
     'plugin:react/recommended',
     'plugin:@typescript-eslint/recommended',
+    'plugin:prettier/recommended',
   ],
-  overrides: [
-  ],
+  overrides: [],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 'latest',
@@ -19,10 +19,7 @@ module.exports = {
     project: './tsconfig.json',
     tsconfigRootDir: __dirname,
   },
-  plugins: [
-    'react',
-    '@typescript-eslint',
-  ],
+  plugins: ['react', '@typescript-eslint', 'prettier'],
   rules: {
     'react/react-in-jsx-scope': 0,
   },
