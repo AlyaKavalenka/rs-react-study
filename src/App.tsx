@@ -5,7 +5,7 @@ import NotFound from './pages/NotFound/NotFound';
 
 export function App() {
   return (
-    <div className="app">
+    <div>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="*" element={<NotFound />} />
