@@ -25,7 +25,7 @@ export default class Card extends React.Component<ICard> {
     return (
       <div className="card">
         <article className="card__header">
-          <span>{name}</span>
+          <span className="card__name">{name}</span>
           <span>{popularity}</span>
         </article>
         <div className="card__img-wrapper">
