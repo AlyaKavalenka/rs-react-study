@@ -18,6 +18,12 @@
     &:hover {
       color: rgba($black-olive, 0.6);
     }
+
+    &_active {
+      color: $auro-metal-saurus;
+      
+      text-decoration: underline 2px;
+    }
   }
 
   .logo {
