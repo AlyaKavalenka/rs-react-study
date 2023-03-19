@@ -1,4 +1,5 @@
 import React from 'react';
+import './Card.scss';
 
 interface ICard {
   id: number;
@@ -22,14 +23,16 @@ export default class Card extends React.Component<ICard> {
     const { name, images, description, price, popularity } = this.props;
     return (
       <div className="card">
-        <article className="name-n-pop">
+        <article className="card__header">
           <span>{name}</span>
           <span>{popularity}</span>
         </article>
-        <img src={`src${images[0]}`} alt={`${name}`} />
-        <article className="description-n-price">
+        <div className="card__img-wrapper">
+          <img src={`src${images[0]}`} alt={`${name}`} className="card__img" />
+        </div>
+        <article className="card__description">
           <span>{description}</span>
-          <span>{price}</span>
+          <span>{`${price}р.`}</span>
         </article>
       </div>
     );

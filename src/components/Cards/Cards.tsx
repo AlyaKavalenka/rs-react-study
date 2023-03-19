@@ -1,5 +1,6 @@
 import Card from '../Card/Card';
 import data from '../../assets/data/data.json';
+import './Cards.scss';
 
 export default function Cards() {
   const array = data.products;
@@ -17,5 +18,5 @@ export default function Cards() {
       key={item.id}
     />
   ));
-  return <div className="Cards">{cardsArray}</div>;
+  return <div className="cards">{cardsArray}</div>;
 }
