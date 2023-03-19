@@ -9,12 +9,14 @@ export default function Header() {
           Ph<span className="logo__second-word">Search</span>
         </h1>
       </Link>
-      <Link to="/">
-        <h3>Home</h3>
-      </Link>
-      <Link to="about">
-        <h3>About Us</h3>
-      </Link>
+      <section className="header__navigation">
+        <Link to="/">
+          <h3>Home</h3>
+        </Link>
+        <Link to="about">
+          <h3>About Us</h3>
+        </Link>
+      </section>
     </header>
   );
 }

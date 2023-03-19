@@ -3,5 +3,11 @@
 body {
   margin: 0;
   
+  color: $isabelline;
   background-color: $light-gray;
+}
+
+a {
+  color: $isabelline;
+  text-decoration: none;
 }
