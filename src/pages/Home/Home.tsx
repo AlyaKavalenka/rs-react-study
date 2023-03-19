@@ -1,10 +1,11 @@
+import Search from '../../components/Search/Search';
 import './Home.scss';
 
 export default function Home() {
   return (
     <main>
       <div className="home">
-        <input type="text" />
+        <Search />
         <div>Cards</div>
       </div>
     </main>
