@@ -10,10 +10,10 @@ export default function Header() {
         </h1>
       </Link>
       <section className="header__navigation">
-        <Link to="/">
+        <Link to="/" className="header__link">
           <h3>Home</h3>
         </Link>
-        <Link to="about">
+        <Link to="about" className="header__link">
           <h3>About Us</h3>
         </Link>
       </section>

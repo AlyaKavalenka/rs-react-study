@@ -14,11 +14,21 @@
     align-items: center;
   }
 
+  &__link {
+    &:hover {
+      color: rgba($black-olive, 0.6);
+    }
+  }
+
   .logo {
     font-style: italic;
 
     &__second-word {
       color: $black-olive;
+
+      &:hover {
+        color: $auro-metal-saurus;
+      }
     }
   }
 }
