@@ -22,7 +22,10 @@
     outline: none;
     caret-color: $quick-silver;
 
-    &:focus {
+    transition: $transition;
+
+    &:focus,
+    &:hover {
       box-shadow: 4px 4px 8px 0 $quick-silver;
     }
 

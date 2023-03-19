@@ -12,6 +12,8 @@ $max-width: 250px;
   border-radius: 5px;
   box-shadow: 0 -8px 5px -5px $darker-quick-silver;
 
+  transition: $transition;
+
   &:hover {
     scale: (1.1);
   }

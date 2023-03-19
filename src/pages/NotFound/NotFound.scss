@@ -26,6 +26,8 @@
 
     text-decoration: underline 2px;
 
+    transition: $transition;
+
     &:hover {
       color: rgba($auro-metal-saurus, .8);
     }
