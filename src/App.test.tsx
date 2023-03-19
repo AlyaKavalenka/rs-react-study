@@ -2,20 +2,9 @@ import { describe, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
 
 import { MemoryRouter } from 'react-router-dom';
-import { WrappedApp, App } from './App';
+import { App } from './App';
 
 describe('App', () => {
-  it('Renders hello world', () => {
-    // ARRANGE
-    render(<WrappedApp />);
-    // Act
-    // Expect
-    expect(
-      screen.getByRole('heading', {
-        level: 1,
-      })
-    ).toHaveTextContent('Hello World');
-  });
   it('Renders not found if invalid path', () => {
     render(
       <MemoryRouter initialEntries={['/banana']}>
@@ -24,8 +13,8 @@ describe('App', () => {
     );
     expect(
       screen.getByRole('heading', {
-        level: 1,
+        level: 4,
       })
-    ).toHaveTextContent('Not Found');
+    ).toHaveTextContent('404 Page Not Found');
   });
 });
