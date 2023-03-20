@@ -1,9 +1,10 @@
+import './Form.scss';
+
 export default function Form() {
   return (
     <main>
-      <div className="form">
-        <h2>Form</h2>
-        <form>
+      <div className="form-container">
+        <form className="form">
           <input type="text" name="" id="" />
           <input type="date" name="" id="" />
           <label htmlFor="select">

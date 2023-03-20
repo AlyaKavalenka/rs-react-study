@@ -1,0 +1,13 @@
+@import '../../styles/variables';
+
+.form-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+
+  .form {
+    display: flex;
+    flex-direction: column;
+  }
+}
