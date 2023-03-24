@@ -22,6 +22,7 @@ export default function Form() {
   const [price, setPrice] = useState(0);
   const [image, setImage] = useState(Cat);
   const [date, setDate] = useState(new Date());
+  const [category, setCategory] = useState(filteredCategArr[0]);
 
   function readFile(target: EventTarget & HTMLInputElement) {
     if (target.files) {
@@ -58,7 +59,11 @@ export default function Form() {
           />
           <label htmlFor="select">
             Select category
-            <select name="select" id="select">
+            <select
+              name="select"
+              id="select"
+              onChange={(e) => setCategory(e.currentTarget.value)}
+            >
               {optionArr}
             </select>
           </label>
@@ -93,7 +98,7 @@ export default function Form() {
               popularity={0}
               stock={0}
               animeName=""
-              category=""
+              category={category}
               images={[image]}
               date={date}
             />

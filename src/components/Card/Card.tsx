@@ -21,12 +21,14 @@ export default class Card extends React.Component<ICard> {
   }
 
   render() {
-    const { name, description, price, popularity, images, date } = this.props;
+    const { name, description, price, popularity, images, date, category } =
+      this.props;
     return (
       <div className="card">
         <article className="card__header">
+          <span className="card__category">{category}</span>
           <span className="card__name">{name}</span>
-          <span>{popularity || 'no reviews'}</span>
+          <span className="card__popularity">{popularity || 'no reviews'}</span>
         </article>
         <div className="card__img-wrapper">
           <img src={images[0]} alt={`${name}`} className="card__img" />

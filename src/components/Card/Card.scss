@@ -40,8 +40,9 @@ $max-width: 250px;
   }
 
   &__header {
-    align-items: center;
-    height: 2.7rem;
+    display: grid;
+    grid-template: 'category popularity'
+                   'name name';
     padding-top: 5px;
     
     font-weight: 500;
@@ -49,9 +50,20 @@ $max-width: 250px;
     color: $darker-quick-silver;
   }
 
+  &__category {
+    grid-area: category;
+  }
+
+  &__popularity {
+    grid-area: popularity;
+    justify-self: end;
+  }
+
   &__name {
     display: -moz-box;
     display: -webkit-box;
+    grid-area: name;
+
     overflow: hidden;
     text-overflow: ellipsis;
     line-clamp: 2;
@@ -64,8 +76,10 @@ $max-width: 250px;
     color: rgba($black-olive, 60%);
   }
 
+  &__popularity,
+  &__category,
   &__date {
-    font-size: smaller;
+    font-size: .82rem;
     color: $auro-metal-saurus;
   }
 }
