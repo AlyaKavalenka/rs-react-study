@@ -63,4 +63,9 @@ $max-width: 250px;
   &__description {
     color: rgba($black-olive, 60%);
   }
+
+  &__date {
+    font-size: smaller;
+    color: $auro-metal-saurus;
+  }
 }

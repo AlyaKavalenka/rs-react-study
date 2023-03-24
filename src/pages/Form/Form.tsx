@@ -21,6 +21,7 @@ export default function Form() {
   const [descr, setDescr] = useState('');
   const [price, setPrice] = useState(0);
   const [image, setImage] = useState(Cat);
+  const [date, setDate] = useState(new Date());
 
   function readFile(target: EventTarget & HTMLInputElement) {
     if (target.files) {
@@ -47,7 +48,14 @@ export default function Form() {
             placeholder="Type product price"
             onInput={(e) => setPrice(+e.currentTarget.value)}
           />
-          <input type="date" name="" id="" />
+          <input
+            type="date"
+            name=""
+            id=""
+            defaultValue={`${new Date().toISOString().split('T')[0]}`}
+            max={`${new Date().toISOString().split('T')[0]}`}
+            onChange={(e) => setDate(new Date(e.currentTarget.value))}
+          />
           <label htmlFor="select">
             Select category
             <select name="select" id="select">
@@ -87,6 +95,7 @@ export default function Form() {
               animeName=""
               category=""
               images={[image]}
+              date={date}
             />
           </section>
         </article>

@@ -16,6 +16,13 @@ export default function Cards() {
       animeName={item.animeName}
       category={item.category}
       images={[Cat]}
+      date={
+        new Date(
+          new Date(2012, 0, 1).getTime() +
+            Math.random() *
+              (new Date().getTime() - new Date(2012, 0, 1).getTime())
+        )
+      }
       key={item.id}
     />
   ));

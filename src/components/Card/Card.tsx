@@ -11,6 +11,7 @@ interface ICard {
   animeName: string;
   category: string;
   images: string[] | undefined[];
+  date: Date;
 }
 
 export default class Card extends React.Component<ICard> {
@@ -20,7 +21,7 @@ export default class Card extends React.Component<ICard> {
   }
 
   render() {
-    const { name, description, price, popularity, images } = this.props;
+    const { name, description, price, popularity, images, date } = this.props;
     return (
       <div className="card">
         <article className="card__header">
@@ -34,6 +35,7 @@ export default class Card extends React.Component<ICard> {
           <span>{description}</span>
           <span>{`${price}р.`}</span>
         </article>
+        <article className="card__date">{`${date.toLocaleDateString()}`}</article>
       </div>
     );
   }
