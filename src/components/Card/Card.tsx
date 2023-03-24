@@ -42,13 +42,13 @@ export default class Card extends React.Component<ICard> {
         <div className="card__img-wrapper">
           <img src={images[0]} alt={`${name}`} className="card__img" />
         </div>
-        <article className="card__description">
-          <span>{description}</span>
-          <span>{`${price}р.`}</span>
-        </article>
         <article className="card__date-n-order">
           <span className="card__date">{`${date.toLocaleDateString()}`}</span>
           <span className="card__order">{order}</span>
+        </article>
+        <article className="card__description">
+          <span>{description}</span>
+          <span>{`${price}р.`}</span>
         </article>
       </div>
     );
