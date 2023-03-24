@@ -78,8 +78,14 @@ $max-width: 250px;
 
   &__popularity,
   &__category,
-  &__date {
+  &__date,
+  &__order {
     font-size: .82rem;
     color: $auro-metal-saurus;
+  }
+
+  &__date-n-order {
+    display: flex;
+    justify-content: space-between;
   }
 }

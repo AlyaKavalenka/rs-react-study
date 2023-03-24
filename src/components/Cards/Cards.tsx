@@ -23,6 +23,7 @@ export default function Cards() {
               (new Date().getTime() - new Date(2012, 0, 1).getTime())
         )
       }
+      order="In stock"
       key={item.id}
     />
   ));

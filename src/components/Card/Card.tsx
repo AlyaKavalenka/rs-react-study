@@ -12,6 +12,7 @@ interface ICard {
   category: string;
   images: string[] | undefined[];
   date: Date;
+  order: string;
 }
 
 export default class Card extends React.Component<ICard> {
@@ -21,8 +22,16 @@ export default class Card extends React.Component<ICard> {
   }
 
   render() {
-    const { name, description, price, popularity, images, date, category } =
-      this.props;
+    const {
+      name,
+      description,
+      price,
+      popularity,
+      images,
+      date,
+      category,
+      order,
+    } = this.props;
     return (
       <div className="card">
         <article className="card__header">
@@ -37,7 +46,10 @@ export default class Card extends React.Component<ICard> {
           <span>{description}</span>
           <span>{`${price}р.`}</span>
         </article>
-        <article className="card__date">{`${date.toLocaleDateString()}`}</article>
+        <article className="card__date-n-order">
+          <span className="card__date">{`${date.toLocaleDateString()}`}</span>
+          <span className="card__order">{order}</span>
+        </article>
       </div>
     );
   }

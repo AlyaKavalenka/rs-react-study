@@ -23,6 +23,7 @@ export default function Form() {
   const [image, setImage] = useState(Cat);
   const [date, setDate] = useState(new Date());
   const [category, setCategory] = useState(filteredCategArr[0]);
+  const [order, setOrder] = useState('');
 
   function readFile(target: EventTarget & HTMLInputElement) {
     if (target.files) {
@@ -68,10 +69,23 @@ export default function Form() {
             </select>
           </label>
           <div>
-            <input type="radio" name="order" id="inStock" defaultChecked />
+            <input
+              type="radio"
+              name="order"
+              id="inStock"
+              defaultChecked
+              value="In stock"
+              onChange={(e) => setOrder(e?.target.value)}
+            />
             <label htmlFor="inStock">In stock</label>
 
-            <input type="radio" name="order" id="underOrder" />
+            <input
+              type="radio"
+              name="order"
+              id="underOrder"
+              value="Under the order"
+              onChange={(e) => setOrder(e?.target.value)}
+            />
             <label htmlFor="underOrder">Under the order</label>
           </div>
           <input
@@ -101,6 +115,7 @@ export default function Form() {
               category={category}
               images={[image]}
               date={date}
+              order={order}
             />
           </section>
         </article>
