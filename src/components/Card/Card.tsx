@@ -25,7 +25,7 @@ export default class Card extends React.Component<ICard> {
       <div className="card">
         <article className="card__header">
           <span className="card__name">{name}</span>
-          <span>{popularity}</span>
+          <span>{popularity || 'no review`s'}</span>
         </article>
         <div className="card__img-wrapper">
           <img src={images[0]} alt={`${name}`} className="card__img" />
