@@ -23,7 +23,7 @@ export default function Form() {
   const [image, setImage] = useState(Cat);
   const [date, setDate] = useState(new Date());
   const [category, setCategory] = useState(filteredCategArr[0]);
-  const [order, setOrder] = useState('');
+  const [order, setOrder] = useState('In stock');
 
   function readFile(target: EventTarget & HTMLInputElement) {
     if (target.files) {
