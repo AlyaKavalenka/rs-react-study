@@ -1,5 +1,9 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import './Form.scss';
+import { useState } from 'react';
 import data from '../../assets/data/data.json';
+import Card from '../../components/Card/Card';
+import Cat from '../../assets/img/cat.jpg';
 
 export default function Form() {
   const array = data.products;
@@ -12,13 +16,37 @@ export default function Form() {
       {item}
     </option>
   ));
+
+  const [name, setName] = useState('');
+  const [descr, setDescr] = useState('');
+  const [price, setPrice] = useState(0);
+  const [image, setImage] = useState(Cat);
+
+  function readFile(target: EventTarget & HTMLInputElement) {
+    if (target.files) {
+      setImage(URL.createObjectURL(target.files[0]));
+    }
+  }
+
   return (
     <main>
       <div className="form-container">
         <form className="form">
-          <input type="text" placeholder="Type product name" />
-          <input type="text" placeholder="Type product description" />
-          <input type="text" placeholder="Type product price" />
+          <input
+            type="text"
+            placeholder="Type product name"
+            onInput={(e) => setName(e.currentTarget.value)}
+          />
+          <input
+            type="text"
+            placeholder="Type product description"
+            onInput={(e) => setDescr(e.currentTarget.value)}
+          />
+          <input
+            type="number"
+            placeholder="Type product price"
+            onInput={(e) => setPrice(+e.currentTarget.value)}
+          />
           <input type="date" name="" id="" />
           <label htmlFor="select">
             Select category
@@ -26,14 +54,42 @@ export default function Form() {
               {optionArr}
             </select>
           </label>
-          <input type="radio" name="" id="" />
-          <input type="file" name="" id="" />
+          <div>
+            <input type="radio" name="order" id="inStock" defaultChecked />
+            <label htmlFor="inStock">In stock</label>
+
+            <input type="radio" name="order" id="underOrder" />
+            <label htmlFor="underOrder">Under the order</label>
+          </div>
+          <input
+            type="file"
+            name=""
+            id=""
+            accept="image/*"
+            onChange={(e) => readFile(e.target)}
+          />
           <label htmlFor="checkbox">
             <input type="checkbox" id="checkbox" />
             Agree to terms and conditions
           </label>
           <input type="submit" value="Submit" />
         </form>
+        <article>
+          <h3>Card Example</h3>
+          <section className="card__wrapper">
+            <Card
+              id={data.total + 1}
+              name={name}
+              description={descr}
+              price={price}
+              popularity={0}
+              stock={0}
+              animeName=""
+              category=""
+              images={[image]}
+            />
+          </section>
+        </article>
       </div>
     </main>
   );

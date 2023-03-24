@@ -1,6 +1,7 @@
 import Card from '../Card/Card';
 import data from '../../assets/data/data.json';
 import './Cards.scss';
+import Cat from '../../assets/img/cat.jpg';
 
 export default function Cards() {
   const array = data.products;
@@ -14,7 +15,7 @@ export default function Cards() {
       stock={item.stock}
       animeName={item.animeName}
       category={item.category}
-      images={item.images}
+      images={[Cat]}
       key={item.id}
     />
   ));
