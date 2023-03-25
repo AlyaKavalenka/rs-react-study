@@ -1,19 +1,6 @@
 import React from 'react';
+import ICard from '../../types';
 import './Card.scss';
-
-interface ICard {
-  id: number;
-  name: string;
-  description: string;
-  price: number;
-  popularity: number;
-  stock: number;
-  animeName: string;
-  category: string;
-  images: string[] | undefined[];
-  date: Date;
-  order: string;
-}
 
 export default class Card extends React.Component<ICard> {
   constructor(props: ICard) {
