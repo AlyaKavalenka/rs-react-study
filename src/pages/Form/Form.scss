@@ -1,20 +1,150 @@
 @import '../../styles/variables';
+@import '../../styles/mixins';
 
-.form-container {
+.form-n-cards {
   display: flex;
-  gap: 2rem;
+  flex-direction: column;
+  gap: 1rem;
   align-items: center;
   justify-content: center;
-  height: 100%;
+
+  .form-n-example {
+    display: flex;
+    gap: 2rem;
+  }
 
   .form {
     display: flex;
     flex-direction: column;
+    gap: .3rem;
+    margin-top: 2rem;
+
+    color: $darker-quick-silver;
+
+    &__input {
+      @include input;
+
+      padding: 4px;
+
+      font-size: .9rem;
+
+      &_select {
+        @include input;
+
+        width: fit-content;
+        padding: 4px;
+
+        font-size: .9rem;
+
+        cursor: pointer;
+      }
+    }
+
+    .select-block {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .radio-block {
+      display: flex;
+
+      overflow: hidden;
+
+      border: 1px solid $quick-silver;
+      border-radius: 15px;
+
+      &__input {
+        display: none;
+
+        &:checked + label {
+          color: $isabelline;
+
+          background: $quick-silver;
+        }
+      }
+
+      &__label {
+        display: inline-block;
+        padding: 0 22px;
+        
+        line-height: 34px;
+
+        cursor: pointer;
+        user-select: none;
+        transition: $transition;
+
+        &:hover {
+          color: $isabelline;
+        }
+      }
+    }
+  
+    .input-file-block {
+      position: relative;
+      
+      padding: 5px 0;
+
+      cursor: pointer;
+
+      background-color: $quick-silver;
+      border-radius: 15px;
+
+      transition: $transition;
+
+      &:hover {
+        background-color: $darker-quick-silver ;
+      }
+
+      &__input {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1;
+
+        width: 100%;
+
+        cursor: pointer;
+        opacity: 0;
+      }
+
+      &__text {
+        display: flex;
+        justify-content: center;
+
+        color: $isabelline;
+
+        cursor: pointer;
+      }
+    }
+
+    &__submit-btn {
+      padding: 12px 0;
+
+      font-size: medium;
+
+      color: $isabelline;
+      
+      cursor: pointer;
+
+      background-color: $quick-silver;
+      border: none;
+      border-radius: 15px;
+
+      transition: $transition;
+
+      &:hover {
+        background-color: $darker-quick-silver ;
+      }
+    }
   }
 
-  .card{
-    &__wrapper {
-    height: 300px;
-    }
+  .cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: center;
+    margin-bottom: 2rem;
   }
 }
