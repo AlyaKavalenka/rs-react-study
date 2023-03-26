@@ -7,6 +7,7 @@ import Cat from '../../assets/img/cat.jpg';
 import ICard from '../../types';
 
 interface MyState {
+  id: number;
   name: string;
   descr: string;
   price: number;
@@ -14,6 +15,7 @@ interface MyState {
   date: Date;
   category: string;
   order: string;
+  cardsArr: ICard[];
 }
 
 export default class Form extends React.Component<ICard, MyState> {
@@ -26,6 +28,7 @@ export default class Form extends React.Component<ICard, MyState> {
   constructor(props: ICard) {
     super(props);
     this.state = {
+      id: 0,
       name: '',
       descr: '',
       price: 0,
@@ -33,6 +36,7 @@ export default class Form extends React.Component<ICard, MyState> {
       date: new Date(),
       category: this.filteredCategArr[0],
       order: 'In stock',
+      cardsArr: [],
     };
   }
 
@@ -43,7 +47,8 @@ export default class Form extends React.Component<ICard, MyState> {
       </option>
     ));
 
-    const { image, name, descr, price, date, category, order } = this.state;
+    const { image, name, descr, price, date, category, order, cardsArr, id } =
+      this.state;
 
     const readFile = (target: EventTarget & HTMLInputElement) => {
       if (target.files) {
@@ -148,14 +153,35 @@ export default class Form extends React.Component<ICard, MyState> {
                 type="submit"
                 value="Create card"
                 className="form__submit-btn"
+                onClick={(e) => {
+                  e.preventDefault();
+                  this.setState({
+                    cardsArr: [
+                      ...cardsArr,
+                      {
+                        id: cardsArr.length,
+                        name,
+                        description: descr,
+                        price,
+                        popularity: 0,
+                        stock: 0,
+                        animeName: '',
+                        category,
+                        images: [image],
+                        date,
+                        order,
+                      },
+                    ],
+                  });
+                }}
               />
             </form>
             <article>
               <h3>Card Example</h3>
               <div className="cards">
-                <section className="card__wrapper">
+                <section className="card__wrapper" key="card-example">
                   <Card
-                    id={data.total + 1}
+                    id={id}
                     name={name}
                     description={descr}
                     price={price}
@@ -166,102 +192,31 @@ export default class Form extends React.Component<ICard, MyState> {
                     images={[image]}
                     date={date}
                     order={order}
+                    key="example"
                   />
                 </section>
               </div>
             </article>
           </div>
           <article className="cards">
-            <section className="card__wrapper">
-              <Card
-                id={data.total + 1}
-                name={name}
-                description={descr}
-                price={price}
-                popularity={0}
-                stock={0}
-                animeName=""
-                category={category}
-                images={[image]}
-                date={date}
-                order={order}
-              />
-            </section>
-            <section className="card__wrapper">
-              <Card
-                id={data.total + 1}
-                name={name}
-                description={descr}
-                price={price}
-                popularity={0}
-                stock={0}
-                animeName=""
-                category={category}
-                images={[image]}
-                date={date}
-                order={order}
-              />
-            </section>
-            <section className="card__wrapper">
-              <Card
-                id={data.total + 1}
-                name={name}
-                description={descr}
-                price={price}
-                popularity={0}
-                stock={0}
-                animeName=""
-                category={category}
-                images={[image]}
-                date={date}
-                order={order}
-              />
-            </section>
-            <section className="card__wrapper">
-              <Card
-                id={data.total + 1}
-                name={name}
-                description={descr}
-                price={price}
-                popularity={0}
-                stock={0}
-                animeName=""
-                category={category}
-                images={[image]}
-                date={date}
-                order={order}
-              />
-            </section>
-            <section className="card__wrapper">
-              <Card
-                id={data.total + 1}
-                name={name}
-                description={descr}
-                price={price}
-                popularity={0}
-                stock={0}
-                animeName=""
-                category={category}
-                images={[image]}
-                date={date}
-                order={order}
-              />
-            </section>
-            <section className="card__wrapper">
-              <Card
-                id={data.total + 1}
-                name={name}
-                description={descr}
-                price={price}
-                popularity={0}
-                stock={0}
-                animeName=""
-                category={category}
-                images={[image]}
-                date={date}
-                order={order}
-              />
-            </section>
+            {cardsArr.map((item) => (
+              <section className="card__wrapper" key={`${item.id}`}>
+                <Card
+                  id={cardsArr.length}
+                  name={item.name}
+                  description={item.description}
+                  price={item.price}
+                  popularity={item.popularity}
+                  stock={item.stock}
+                  animeName={item.animeName}
+                  category={item.category}
+                  images={item.images}
+                  date={item.date}
+                  order={item.order}
+                  key={`${item.id}`}
+                />
+              </section>
+            ))}
           </article>
         </div>
       </main>
