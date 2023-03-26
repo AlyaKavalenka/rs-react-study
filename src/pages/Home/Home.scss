@@ -1,4 +1,7 @@
-h1 {
-  position: relative;
-  color: #fff;
+.home {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  align-items: center;
+  margin-top: 2rem;
 }

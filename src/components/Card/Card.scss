@@ -1,0 +1,65 @@
+@import '../../styles/variables';
+
+$max-width: 250px;
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  cursor: pointer;
+
+  border-radius: 5px;
+  box-shadow: 0 -8px 5px -5px $darker-quick-silver;
+
+  transition: $transition;
+
+  &:hover {
+    scale: (1.1);
+  }
+
+  &__img-wrapper {
+    max-width: $max-width;
+    max-height: $max-width;
+  }
+
+  &__img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+  }
+
+  &__header,
+  &__description {
+    display: flex;
+    gap: 5px;
+    justify-content: space-between;
+    max-width: $max-width;
+  }
+
+  &__header {
+    align-items: center;
+    height: 2.7rem;
+    padding-top: 5px;
+    
+    font-weight: 500;
+
+    color: $darker-quick-silver;
+  }
+
+  &__name {
+    display: -moz-box;
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-clamp: 2;
+    -moz-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+
+  &__description {
+    color: rgba($black-olive, 60%);
+  }
+}

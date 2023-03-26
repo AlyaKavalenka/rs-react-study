@@ -1,0 +1,44 @@
+@import '../../styles/variables';
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+
+  background-color: $quick-silver;
+  box-shadow: 0 5px 5px -5px rgba($quick-silver, 0.6);
+
+  &__navigation {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  &__link {
+    transition: $transition;
+
+    &:hover {
+      color: rgba($black-olive, 0.6);
+    }
+
+    &_active {
+      color: $auro-metal-saurus;
+      
+      text-decoration: underline 2px;
+    }
+  }
+
+  .logo {
+    font-style: italic;
+
+    &__second-word {
+      color: $black-olive;
+
+      transition: $transition;
+
+      &:hover {
+        color: $auro-metal-saurus;
+      }
+    }
+  }
+}
