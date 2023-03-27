@@ -182,6 +182,8 @@ export default class Form extends React.Component<ICard, MyState> {
                 }
                 className="form__input"
                 required
+                pattern="\d"
+                title="Only digits"
                 ref={this.inputPriceRef}
               />
               <input
