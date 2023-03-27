@@ -5,6 +5,7 @@ import data from '../../assets/data/data.json';
 import Card from '../../components/Card/Card';
 import Cat from '../../assets/img/cat.jpg';
 import ICard from '../../types';
+import Popup from '../../components/Popup/Popup';
 
 interface MyState {
   id: number;
@@ -312,9 +313,7 @@ export default class Form extends React.Component<ICard, MyState> {
               </section>
             ))}
           </article>
-          <aside className={popup ? 'popup_active' : 'popup'}>
-            <h3>A card with the name &#34;{name}&#34; has been created</h3>
-          </aside>
+          <Popup popup={popup} name={name} />
         </div>
       </main>
     );

@@ -1,0 +1,23 @@
+@import '../../styles/variables';
+
+.popup {
+  visibility: hidden;
+
+  opacity: 0;
+  transition: $transition;
+
+  &_active {
+    position: absolute;
+
+    padding: 5px 10px;
+
+    visibility: visible;
+
+    background-color: rgba($auro-metal-saurus, .7);
+    border-radius: 15px;
+
+    opacity: 1;
+
+    transition: $transition;
+  }
+}
