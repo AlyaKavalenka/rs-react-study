@@ -50,6 +50,28 @@ export default class Form extends React.Component<ICard, MyState> {
     const { image, name, descr, price, date, category, order, cardsArr, id } =
       this.state;
 
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      this.setState({
+        cardsArr: [
+          ...cardsArr,
+          {
+            id: cardsArr.length,
+            name,
+            description: descr,
+            price,
+            popularity: 0,
+            stock: 0,
+            animeName: '',
+            category,
+            images: [image],
+            date,
+            order,
+          },
+        ],
+      });
+    };
+
     const readFile = (target: EventTarget & HTMLInputElement) => {
       if (target.files) {
         this.setState({ image: URL.createObjectURL(target.files[0]) });
@@ -60,18 +82,24 @@ export default class Form extends React.Component<ICard, MyState> {
       <main>
         <div className="form-n-cards">
           <div className="form-n-example">
-            <form className="form">
+            <form className="form" onSubmit={(e) => handleSubmit(e)}>
               <input
                 type="text"
                 placeholder="Type product name"
                 onInput={(e) => this.setState({ name: e.currentTarget.value })}
                 className="form__input"
+                pattern="[A-Z]{1}[A-z]{2,32}"
+                required
+                title="The name must start with a capital letter and contain more than 3 letters"
               />
               <input
                 type="text"
                 placeholder="Type product description"
                 onInput={(e) => this.setState({ descr: e.currentTarget.value })}
                 className="form__input"
+                required
+                pattern="[A-z,\s]{3,64}"
+                title="The description field must be entered with a minimum of 3 letters, a maximum of 64"
               />
               <input
                 type="number"
@@ -80,6 +108,7 @@ export default class Form extends React.Component<ICard, MyState> {
                   this.setState({ price: +e.currentTarget.value })
                 }
                 className="form__input"
+                required
               />
               <input
                 type="date"
@@ -91,6 +120,7 @@ export default class Form extends React.Component<ICard, MyState> {
                   this.setState({ date: new Date(e.currentTarget.value) })
                 }
                 className="form__input"
+                required
               />
               <label htmlFor="select" className="select-block">
                 Select category
@@ -146,34 +176,13 @@ export default class Form extends React.Component<ICard, MyState> {
                 <span className="input-file-block__text">Choose file</span>
               </div>
               <label htmlFor="checkbox">
-                <input type="checkbox" id="checkbox" />
+                <input type="checkbox" id="checkbox" required />
                 Agree to terms and conditions
               </label>
               <input
                 type="submit"
                 value="Create card"
                 className="form__submit-btn"
-                onClick={(e) => {
-                  e.preventDefault();
-                  this.setState({
-                    cardsArr: [
-                      ...cardsArr,
-                      {
-                        id: cardsArr.length,
-                        name,
-                        description: descr,
-                        price,
-                        popularity: 0,
-                        stock: 0,
-                        animeName: '',
-                        category,
-                        images: [image],
-                        date,
-                        order,
-                      },
-                    ],
-                  });
-                }}
               />
             </form>
             <article>
