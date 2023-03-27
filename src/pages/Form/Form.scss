@@ -2,6 +2,8 @@
 @import '../../styles/mixins';
 
 .form-n-cards {
+  position: relative;
+
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -146,5 +148,27 @@
     gap: 1.5rem;
     justify-content: center;
     margin-bottom: 2rem;
+  }
+
+  .popup {
+    visibility: hidden;
+
+    opacity: 0;
+    transition: $transition;
+
+    &_active {
+      position: absolute;
+
+      padding: 5px 10px;
+
+      visibility: visible;
+
+      background-color: rgba($auro-metal-saurus, .7);
+      border-radius: 15px;
+
+      opacity: 1;
+
+      transition: $transition;
+    }
   }
 }

@@ -16,6 +16,7 @@ interface MyState {
   category: string;
   order: string;
   cardsArr: ICard[];
+  popup: boolean;
 }
 
 export default class Form extends React.Component<ICard, MyState> {
@@ -24,6 +25,22 @@ export default class Form extends React.Component<ICard, MyState> {
   filteredCategArr = this.categArr.filter(
     (item, index) => this.categArr.indexOf(item) === index
   );
+
+  private inputNameRef: React.RefObject<HTMLInputElement>;
+
+  private inputDescrRef: React.RefObject<HTMLInputElement>;
+
+  private inputPriceRef: React.RefObject<HTMLInputElement>;
+
+  private inputDateRef: React.RefObject<HTMLInputElement>;
+
+  private inputCategRef: React.RefObject<HTMLSelectElement>;
+
+  private inputOrderRef: React.RefObject<HTMLInputElement>;
+
+  private inputFileRef: React.RefObject<HTMLInputElement>;
+
+  private inputCheckboxRef: React.RefObject<HTMLInputElement>;
 
   constructor(props: ICard) {
     super(props);
@@ -37,7 +54,16 @@ export default class Form extends React.Component<ICard, MyState> {
       category: this.filteredCategArr[0],
       order: 'In stock',
       cardsArr: [],
+      popup: false,
     };
+    this.inputNameRef = React.createRef();
+    this.inputDescrRef = React.createRef();
+    this.inputPriceRef = React.createRef();
+    this.inputDateRef = React.createRef();
+    this.inputCategRef = React.createRef();
+    this.inputOrderRef = React.createRef();
+    this.inputFileRef = React.createRef();
+    this.inputCheckboxRef = React.createRef();
   }
 
   render() {
@@ -47,8 +73,18 @@ export default class Form extends React.Component<ICard, MyState> {
       </option>
     ));
 
-    const { image, name, descr, price, date, category, order, cardsArr, id } =
-      this.state;
+    const {
+      image,
+      name,
+      descr,
+      price,
+      date,
+      category,
+      order,
+      cardsArr,
+      id,
+      popup,
+    } = this.state;
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
@@ -69,7 +105,42 @@ export default class Form extends React.Component<ICard, MyState> {
             order,
           },
         ],
+        popup: true,
       });
+      setTimeout(() => {
+        this.setState({
+          id: 0,
+          name: '',
+          descr: '',
+          price: 0,
+          image: Cat,
+          date: new Date(),
+          category: this.filteredCategArr[0],
+          order: 'In stock',
+          popup: false,
+        });
+      }, 2000);
+      if (
+        this.inputNameRef.current &&
+        this.inputDescrRef.current &&
+        this.inputPriceRef.current &&
+        this.inputDateRef.current &&
+        this.inputCategRef.current &&
+        this.inputOrderRef.current &&
+        this.inputFileRef.current &&
+        this.inputCheckboxRef.current
+      ) {
+        this.inputNameRef.current.value = '';
+        this.inputDescrRef.current.value = '';
+        this.inputPriceRef.current.value = '';
+        this.inputDateRef.current.value = `${
+          new Date().toISOString().split('T')[0]
+        }`;
+        this.inputCategRef.current.value = `${this.filteredCategArr[0]}`;
+        this.inputOrderRef.current.checked = true;
+        this.inputFileRef.current.value = '';
+        this.inputCheckboxRef.current.checked = false;
+      }
     };
 
     const readFile = (target: EventTarget & HTMLInputElement) => {
@@ -91,6 +162,7 @@ export default class Form extends React.Component<ICard, MyState> {
                 pattern="[A-Z]{1}[A-z]{2,32}"
                 required
                 title="The name must start with a capital letter and contain more than 3 letters"
+                ref={this.inputNameRef}
               />
               <input
                 type="text"
@@ -100,6 +172,7 @@ export default class Form extends React.Component<ICard, MyState> {
                 required
                 pattern="[A-z,\s]{3,64}"
                 title="The description field must be entered with a minimum of 3 letters, a maximum of 64"
+                ref={this.inputDescrRef}
               />
               <input
                 type="number"
@@ -109,6 +182,7 @@ export default class Form extends React.Component<ICard, MyState> {
                 }
                 className="form__input"
                 required
+                ref={this.inputPriceRef}
               />
               <input
                 type="date"
@@ -121,6 +195,7 @@ export default class Form extends React.Component<ICard, MyState> {
                 }
                 className="form__input"
                 required
+                ref={this.inputDateRef}
               />
               <label htmlFor="select" className="select-block">
                 Select category
@@ -131,6 +206,7 @@ export default class Form extends React.Component<ICard, MyState> {
                     this.setState({ category: e.currentTarget.value })
                   }
                   className="form__input_select"
+                  ref={this.inputCategRef}
                 >
                   {optionArr}
                 </select>
@@ -145,6 +221,7 @@ export default class Form extends React.Component<ICard, MyState> {
                     value="In stock"
                     onChange={(e) => this.setState({ order: e?.target.value })}
                     className="radio-block__input"
+                    ref={this.inputOrderRef}
                   />
                   <label htmlFor="inStock" className="radio-block__label">
                     In stock
@@ -172,11 +249,17 @@ export default class Form extends React.Component<ICard, MyState> {
                   accept="image/*"
                   onChange={(e) => readFile(e.target)}
                   className="input-file-block__input"
+                  ref={this.inputFileRef}
                 />
                 <span className="input-file-block__text">Choose file</span>
               </div>
               <label htmlFor="checkbox">
-                <input type="checkbox" id="checkbox" required />
+                <input
+                  type="checkbox"
+                  id="checkbox"
+                  required
+                  ref={this.inputCheckboxRef}
+                />
                 Agree to terms and conditions
               </label>
               <input
@@ -227,6 +310,9 @@ export default class Form extends React.Component<ICard, MyState> {
               </section>
             ))}
           </article>
+          <aside className={popup ? 'popup_active' : 'popup'}>
+            <h3>A card with the name &#34;{name}&#34; has been created</h3>
+          </aside>
         </div>
       </main>
     );
