@@ -13,7 +13,24 @@ export function App() {
         <Route path="/" element={<Home />} />
         <Route path="*" element={<NotFound />} />
         <Route path="about" element={<AboutUs />} />
-        <Route path="form" element={<Form />} />
+        <Route
+          path="form"
+          element={
+            <Form
+              id={0}
+              name=""
+              description=""
+              price={0}
+              popularity={0}
+              stock={0}
+              animeName=""
+              category=""
+              images={[]}
+              date={new Date()}
+              order=""
+            />
+          }
+        />
       </Routes>
     </div>
   );
