@@ -37,6 +37,8 @@
     "jsdom": "^21.1.1",
     "json-loader": "^0.5.7",
     "prettier": "^2.8.4",
+    "react-redux": "^8.0.5",
+    "redux": "^4.2.1",
     "sass": "^1.59.2",
     "stylelint": "^15.2.0",
     "stylelint-config-recess-order": "^4.0.0",
