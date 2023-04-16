@@ -27,6 +27,14 @@ export default function Header() {
         >
           <h3>About Us</h3>
         </Link>
+        <Link
+          to="form"
+          className={
+            locationName === '/form' ? 'header__link_active' : 'header__link'
+          }
+        >
+          <h3>Form</h3>
+        </Link>
       </section>
     </header>
   );

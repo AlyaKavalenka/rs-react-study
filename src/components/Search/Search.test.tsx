@@ -4,6 +4,10 @@ import { render, screen } from '@testing-library/react';
 import Search from './Search';
 
 describe('Search', () => {
+  it('renders without errors', () => {
+    const wrapper = render(<Search />);
+    expect(wrapper).toBeTruthy();
+  });
   it('Renders not found placeholder in input', () => {
     render(<Search />);
     expect(screen.getByPlaceholderText('Type to search'));

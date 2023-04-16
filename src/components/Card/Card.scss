@@ -6,6 +6,7 @@ $max-width: 250px;
   display: flex;
   flex-direction: column;
   gap: 5px;
+  height: 100%;
 
   cursor: pointer;
 
@@ -39,8 +40,10 @@ $max-width: 250px;
   }
 
   &__header {
-    align-items: center;
-    height: 2.7rem;
+    display: grid;
+    grid-template: 'category popularity'
+                   'name name';
+    height: 4.3rem;
     padding-top: 5px;
     
     font-weight: 500;
@@ -48,9 +51,20 @@ $max-width: 250px;
     color: $darker-quick-silver;
   }
 
+  &__category {
+    grid-area: category;
+  }
+
+  &__popularity {
+    grid-area: popularity;
+    justify-self: end;
+  }
+
   &__name {
     display: -moz-box;
     display: -webkit-box;
+    grid-area: name;
+
     overflow: hidden;
     text-overflow: ellipsis;
     line-clamp: 2;
@@ -61,5 +75,18 @@ $max-width: 250px;
 
   &__description {
     color: rgba($black-olive, 60%);
+  }
+
+  &__popularity,
+  &__category,
+  &__date,
+  &__order {
+    font-size: .82rem;
+    color: $auro-metal-saurus;
+  }
+
+  &__date-n-order {
+    display: flex;
+    justify-content: space-between;
   }
 }

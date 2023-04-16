@@ -1,10 +1,29 @@
 @import 'variables';
 
+html {
+  height: 100%;
+}
+
 body {
   margin: 0;
   
   color: $isabelline;
   background-color: $light-gray;
+}
+
+#root,
+.app,
+body {
+  height: inherit;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex-grow: 1;
 }
 
 a {
