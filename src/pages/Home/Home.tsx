@@ -1,19 +1,14 @@
-import { Photo } from 'pexels';
-import { useState } from 'react';
 import Cards from '../../components/Cards/Cards';
 import Search from '../../components/Search/Search';
 import './Home.scss';
+import { useAppSelector } from '../../hooks/hooks';
 
 export default function Home() {
-  const [photos, setPhotos] = useState<Photo[]>([]);
-  const updateCards = (value: Photo[]) => {
-    setPhotos(value);
-  };
-
+  const photos = useAppSelector((state) => state.photos.photos);
   return (
     <main>
       <div className="home">
-        <Search callback={updateCards} />
+        <Search />
         {photos.length > 0 ? (
           <Cards array={photos} />
         ) : (

@@ -1,11 +1,11 @@
-import { useState } from 'react';
-import { Photo } from 'pexels';
-import queryPhotos from '../../API/API';
 import './Search.scss';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
+import { searchValue } from '../../Store/Slicers/SearchSlice';
+import { fetchByPhotos } from '../../Store/Slicers/PhotosSlice';
 
-export default function Search(props: { callback: (photos: Photo[]) => void }) {
-  const [photos, setPhotos] = useState<Photo[]>([]);
-  const { callback } = props;
+export default function Search() {
+  const dispatch = useAppDispatch();
+  const searchInputValue = useAppSelector((state) => state.search.value);
 
   return (
     <div className="search__wrapper">
@@ -13,21 +13,14 @@ export default function Search(props: { callback: (photos: Photo[]) => void }) {
         type="text"
         className="search__input"
         placeholder="Type to search"
-        onBlur={(e) => {
-          localStorage.setItem('inputValue', e.currentTarget.value);
-        }}
-        defaultValue={
-          localStorage.getItem('inputValue')
-            ? `${localStorage.getItem('inputValue')}`
-            : ''
-        }
+        defaultValue={searchInputValue}
         onKeyUp={(e) => {
           if (e.key === 'Enter') {
-            callback(photos);
+            dispatch(fetchByPhotos(searchInputValue));
           }
         }}
         onInput={(e) => {
-          setPhotos(queryPhotos(e.currentTarget.value));
+          dispatch(searchValue(e.currentTarget.value));
         }}
       />
     </div>
