@@ -189,7 +189,6 @@ export default function Form() {
             />
           </form>
         </div>
-
         <article className="cards">
           {formCards.map((card) => (
             <section className="card__wrapper" key={`${card.id}`}>
@@ -209,7 +208,12 @@ export default function Form() {
             </section>
           ))}
         </article>
-        <Popup popup={popup} name={formCards[formCards.length - 1].name} />
+        \
+        {formCards.length > 0 ? (
+          <Popup popup={popup} name={formCards[formCards.length - 1].name} />
+        ) : (
+          ''
+        )}
       </div>
     </main>
   );
