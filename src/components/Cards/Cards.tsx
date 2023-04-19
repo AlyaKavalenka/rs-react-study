@@ -15,13 +15,11 @@ export default function Cards(props: { array: Photo[] }) {
       animeName={item.photographer}
       category=""
       images={[item.src.original]}
-      date={
-        new Date(
-          new Date(2012, 0, 1).getTime() +
-            Math.random() *
-              (new Date().getTime() - new Date(2012, 0, 1).getTime())
-        )
-      }
+      date={new Date(
+        new Date(2012, 0, 1).getTime() +
+          Math.random() *
+            (new Date().getTime() - new Date(2012, 0, 1).getTime())
+      ).toLocaleDateString()}
       order=""
       key={item.id}
     />

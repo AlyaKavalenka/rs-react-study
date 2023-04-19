@@ -4,21 +4,7 @@ import Form from './Form';
 
 describe('From', () => {
   test('renders without errors', () => {
-    const wrapper = render(
-      <Form
-        id={0}
-        name=""
-        description=""
-        price={0}
-        popularity={0}
-        stock={0}
-        animeName=""
-        category=""
-        images={[]}
-        date={new Date()}
-        order=""
-      />
-    );
+    const wrapper = render(<Form />);
     expect(wrapper).toBeTruthy();
   });
 });
