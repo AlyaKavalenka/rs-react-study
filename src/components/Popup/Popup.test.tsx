@@ -1,14 +1,13 @@
-import { describe, test, expect } from 'vitest';
 import { render } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import Form from './Form';
 import { store } from '../../Store/store';
+import Popup from './Popup';
 
-describe('From', () => {
-  test('renders without errors', () => {
+describe('Popup', () => {
+  it('renders without errors', () => {
     const wrapper = render(
       <Provider store={store}>
-        <Form />
+        <Popup popup name="Test" />
       </Provider>
     );
     expect(wrapper).toBeTruthy();

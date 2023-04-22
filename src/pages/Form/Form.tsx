@@ -1,321 +1,220 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable react/jsx-props-no-spreading */
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { useState } from 'react';
+import { IFormInputs } from '../../types';
 import './Form.scss';
-import React from 'react';
-import data from '../../assets/data/data.json';
 import Card from '../../components/Card/Card';
-import Cat from '../../assets/img/cat.jpg';
-import ICard from '../../types';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
+import { formCardsValue } from '../../Store/Slicers/FormCards';
+import data from '../../assets/data/data.json';
 import Popup from '../../components/Popup/Popup';
 
-interface MyState {
-  id: number;
-  name: string;
-  descr: string;
-  price: number;
-  image: string;
-  date: Date;
-  category: string;
-  order: string;
-  cardsArr: ICard[];
-  popup: boolean;
-}
+export default function Form() {
+  const dispatch = useAppDispatch();
+  const formCards = useAppSelector((state) => state.formCards.value);
 
-export default class Form extends React.Component<ICard, MyState> {
-  categArr = data.products.map((item) => item.category);
+  const [img, setImg] = useState('');
+  const [popup, setPopup] = useState(false);
 
-  filteredCategArr = this.categArr.filter(
-    (item, index) => this.categArr.indexOf(item) === index
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<IFormInputs>();
+
+  const categArr = data.products.map((item) => item.category);
+  const filteredCategArr = categArr.filter(
+    (item, index) => categArr.indexOf(item) === index
   );
+  const optionArr = filteredCategArr.map((item) => (
+    <option value={item} key={`${item}`}>
+      {item}
+    </option>
+  ));
 
-  private inputNameRef: React.RefObject<HTMLInputElement>;
+  const readFile = (target: EventTarget & HTMLInputElement) => {
+    if (target.files) {
+      setImg(URL.createObjectURL(target.files[0]));
+    }
+  };
 
-  private inputDescrRef: React.RefObject<HTMLInputElement>;
-
-  private inputPriceRef: React.RefObject<HTMLInputElement>;
-
-  private inputDateRef: React.RefObject<HTMLInputElement>;
-
-  private inputCategRef: React.RefObject<HTMLSelectElement>;
-
-  private inputOrderRef: React.RefObject<HTMLInputElement>;
-
-  private inputFileRef: React.RefObject<HTMLInputElement>;
-
-  private inputCheckboxRef: React.RefObject<HTMLInputElement>;
-
-  constructor(props: ICard) {
-    super(props);
-    this.state = {
-      id: 0,
-      name: '',
-      descr: '',
-      price: 0,
-      image: Cat,
-      date: new Date(),
-      category: this.filteredCategArr[0],
-      order: 'In stock',
-      cardsArr: [],
-      popup: false,
-    };
-    this.inputNameRef = React.createRef();
-    this.inputDescrRef = React.createRef();
-    this.inputPriceRef = React.createRef();
-    this.inputDateRef = React.createRef();
-    this.inputCategRef = React.createRef();
-    this.inputOrderRef = React.createRef();
-    this.inputFileRef = React.createRef();
-    this.inputCheckboxRef = React.createRef();
-  }
-
-  render() {
-    const optionArr = this.filteredCategArr.map((item) => (
-      <option value={item} key={`${item}`}>
-        {item}
-      </option>
-    ));
-
-    const {
-      image,
+  const onSubmit: SubmitHandler<IFormInputs> = (cardsData) => {
+    const { name, description, price, date, category, order, check } =
+      cardsData;
+    const newId = formCards.length;
+    const newCard: IFormInputs = {
+      id: newId,
       name,
-      descr,
+      description,
       price,
-      date,
+      date: new Date(date).toLocaleDateString(),
       category,
       order,
-      cardsArr,
-      id,
-      popup,
-    } = this.state;
-
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-      this.setState({
-        cardsArr: [
-          ...cardsArr,
-          {
-            id: cardsArr.length,
-            name,
-            description: descr,
-            price,
-            popularity: 0,
-            stock: 0,
-            animeName: '',
-            category,
-            images: [image],
-            date,
-            order,
-          },
-        ],
-        popup: true,
-      });
-      setTimeout(() => {
-        this.setState({
-          id: 0,
-          name: '',
-          descr: '',
-          price: 0,
-          image: Cat,
-          date: new Date(),
-          category: this.filteredCategArr[0],
-          order: 'In stock',
-          popup: false,
-        });
-      }, 2000);
-      if (
-        this.inputNameRef.current &&
-        this.inputDescrRef.current &&
-        this.inputPriceRef.current &&
-        this.inputDateRef.current &&
-        this.inputCategRef.current &&
-        this.inputOrderRef.current &&
-        this.inputFileRef.current &&
-        this.inputCheckboxRef.current
-      ) {
-        this.inputNameRef.current.value = '';
-        this.inputDescrRef.current.value = '';
-        this.inputPriceRef.current.value = '';
-        this.inputDateRef.current.value = `${
-          new Date().toISOString().split('T')[0]
-        }`;
-        this.inputCategRef.current.value = `${this.filteredCategArr[0]}`;
-        this.inputOrderRef.current.checked = true;
-        this.inputFileRef.current.value = '';
-        this.inputCheckboxRef.current.checked = false;
-      }
+      images: [img],
+      check,
     };
+    dispatch(formCardsValue([...formCards, newCard]));
+    setPopup(true);
+    setTimeout(() => {
+      setPopup(false);
+      reset();
+    }, 2000);
+  };
 
-    const readFile = (target: EventTarget & HTMLInputElement) => {
-      if (target.files) {
-        this.setState({ image: URL.createObjectURL(target.files[0]) });
-      }
-    };
+  return (
+    <main>
+      <div className="form-n-cards">
+        <div className="form-n-example">
+          <form className="form" onSubmit={handleSubmit(onSubmit)}>
+            <input
+              type="text"
+              placeholder="Type product name"
+              className="form__input"
+              {...register('name', {
+                required: true,
+                pattern: /[A-Z]{1}[A-z]{2,32}/,
+              })}
+            />
+            {errors?.name && (
+              <p>
+                The name must start with a capital letter and contain more than
+                3 letters
+              </p>
+            )}
 
-    return (
-      <main>
-        <div className="form-n-cards">
-          <div className="form-n-example">
-            <form className="form" onSubmit={(e) => handleSubmit(e)}>
-              <input
-                type="text"
-                placeholder="Type product name"
-                onInput={(e) => this.setState({ name: e.currentTarget.value })}
-                className="form__input"
-                pattern="[A-Z]{1}[A-z]{2,32}"
-                required
-                title="The name must start with a capital letter and contain more than 3 letters"
-                ref={this.inputNameRef}
-              />
-              <input
-                type="text"
-                placeholder="Type product description"
-                onInput={(e) => this.setState({ descr: e.currentTarget.value })}
-                className="form__input"
-                required
-                pattern="[A-z,\s]{3,64}"
-                title="The description field must be entered with a minimum of 3 letters, a maximum of 64"
-                ref={this.inputDescrRef}
-              />
-              <input
-                type="number"
-                placeholder="Type product price"
-                onInput={(e) =>
-                  this.setState({ price: +e.currentTarget.value })
-                }
-                className="form__input"
-                required
-                pattern="\d"
-                title="Only digits"
-                ref={this.inputPriceRef}
-              />
-              <input
-                type="date"
-                name=""
-                id=""
-                defaultValue={`${new Date().toISOString().split('T')[0]}`}
-                max={`${new Date().toISOString().split('T')[0]}`}
-                onChange={(e) =>
-                  this.setState({ date: new Date(e.currentTarget.value) })
-                }
-                className="form__input"
-                required
-                ref={this.inputDateRef}
-              />
-              <label htmlFor="select" className="select-block">
-                Select category
-                <select
-                  name="select"
-                  id="select"
-                  onChange={(e) =>
-                    this.setState({ category: e.currentTarget.value })
-                  }
-                  className="form__input_select"
-                  ref={this.inputCategRef}
-                >
-                  {optionArr}
-                </select>
-              </label>
-              <div className="radio-block">
-                <div className="radio-block__input-wrapper">
-                  <input
-                    type="radio"
-                    name="order"
-                    id="inStock"
-                    defaultChecked
-                    value="In stock"
-                    onChange={(e) => this.setState({ order: e?.target.value })}
-                    className="radio-block__input"
-                    ref={this.inputOrderRef}
-                  />
-                  <label htmlFor="inStock" className="radio-block__label">
-                    In stock
-                  </label>
-                </div>
-                <div className="radio-block__input-wrapper">
-                  <input
-                    type="radio"
-                    name="order"
-                    id="underOrder"
-                    value="Under the order"
-                    onChange={(e) => this.setState({ order: e?.target.value })}
-                    className="radio-block__input"
-                  />
-                  <label htmlFor="underOrder" className="radio-block__label">
-                    Under the order
-                  </label>
-                </div>
-              </div>
-              <div className="input-file-block">
+            <input
+              type="text"
+              className="form__input"
+              placeholder="Type product description"
+              {...register('description', {
+                required: true,
+                pattern: /[A-z,\s]{3,64}/,
+              })}
+            />
+            {errors?.description && (
+              <p>
+                The description field must be entered with a minimum of 3
+                letters, a maximum of 64
+              </p>
+            )}
+
+            <input
+              type="number"
+              className="form__input"
+              placeholder="Type product price"
+              {...register('price', {
+                required: true,
+                pattern: /\d/,
+              })}
+            />
+            {errors?.price && <p>Only digits</p>}
+
+            <input
+              type="date"
+              className="form__input"
+              defaultValue={`${new Date().toISOString().split('T')[0]}`}
+              max={`${new Date().toISOString().split('T')[0]}`}
+              {...register('date', {
+                required: true,
+              })}
+            />
+
+            <label htmlFor="select" className="select-block">
+              Select category
+              <select
+                id="select"
+                {...register('category')}
+                className="form__input_select"
+              >
+                {optionArr}
+              </select>
+            </label>
+
+            <div className="radio-block">
+              <div className="radio-block__input-wrapper">
                 <input
-                  type="file"
-                  name=""
-                  id=""
-                  accept="image/*"
-                  onChange={(e) => readFile(e.target)}
-                  className="input-file-block__input"
-                  ref={this.inputFileRef}
+                  type="radio"
+                  {...register('order')}
+                  className="radio-block__input"
+                  id="inStock"
+                  defaultChecked
+                  value="In stock"
                 />
-                <span className="input-file-block__text">Choose file</span>
+                <label htmlFor="inStock" className="radio-block__label">
+                  In stock
+                </label>
               </div>
-              <label htmlFor="checkbox">
+
+              <div className="radio-block__input-wrapper">
                 <input
-                  type="checkbox"
-                  id="checkbox"
-                  required
-                  ref={this.inputCheckboxRef}
+                  type="radio"
+                  {...register('order')}
+                  className="radio-block__input"
+                  id="underOrder"
+                  value="Under the order"
                 />
-                Agree to terms and conditions
-              </label>
-              <input
-                type="submit"
-                value="Create card"
-                className="form__submit-btn"
-              />
-            </form>
-            <article>
-              <h3>Card Example</h3>
-              <div className="cards">
-                <section className="card__wrapper" key="card-example">
-                  <Card
-                    id={id}
-                    name={name}
-                    description={descr}
-                    price={price}
-                    popularity={0}
-                    stock={0}
-                    animeName=""
-                    category={category}
-                    images={[image]}
-                    date={date}
-                    order={order}
-                    key="example"
-                  />
-                </section>
+                <label htmlFor="underOrder" className="radio-block__label">
+                  Under the order
+                </label>
               </div>
-            </article>
-          </div>
-          <article className="cards">
-            {cardsArr.map((item) => (
-              <section className="card__wrapper" key={`${item.id}`}>
-                <Card
-                  id={cardsArr.length}
-                  name={item.name}
-                  description={item.description}
-                  price={item.price}
-                  popularity={item.popularity}
-                  stock={item.stock}
-                  animeName={item.animeName}
-                  category={item.category}
-                  images={item.images}
-                  date={item.date}
-                  order={item.order}
-                  key={`${item.id}`}
-                />
-              </section>
-            ))}
-          </article>
-          <Popup popup={popup} name={name} />
+            </div>
+
+            <div className="input-file-block">
+              <input
+                type="file"
+                {...register('images')}
+                accept="image/*"
+                className="input-file-block__input"
+                onChange={(e) => readFile(e.target)}
+              />
+              <span className="input-file-block__text">Choose file</span>
+            </div>
+
+            <label htmlFor="checkbox">
+              <input
+                type="checkbox"
+                id="checkbox"
+                required
+                {...register('check', { required: true })}
+              />
+              Agree to terms and conditions
+            </label>
+
+            <input
+              type="submit"
+              value="Create card"
+              className="form__submit-btn"
+            />
+          </form>
         </div>
-      </main>
-    );
-  }
+        <article className="cards">
+          {formCards.map((card) => (
+            <section className="card__wrapper" key={`${card.id}`}>
+              <Card
+                id={card.id}
+                name={card.name}
+                description={card.description}
+                price={card.price}
+                popularity={0}
+                stock={0}
+                animeName=""
+                category={card.category}
+                images={card.images}
+                date={card.date}
+                order={card.order}
+              />
+            </section>
+          ))}
+        </article>
+        \
+        {formCards.length > 0 ? (
+          <Popup popup={popup} name={formCards[formCards.length - 1].name} />
+        ) : (
+          ''
+        )}
+      </div>
+    </main>
+  );
 }

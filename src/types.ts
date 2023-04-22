@@ -8,6 +8,18 @@ export default interface ICard {
   animeName: string;
   category: string;
   images: string[] | undefined[];
-  date: Date;
+  date: string;
   order: string;
+}
+
+export interface IFormInputs {
+  id: number;
+  name: string;
+  description: string;
+  price: number;
+  date: string;
+  category: string;
+  order: string;
+  images: string[] | undefined[];
+  check: boolean;
 }

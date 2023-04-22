@@ -1,29 +1,24 @@
 import { describe, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
-
+import { Provider } from 'react-redux';
+import { store } from '../../Store/store';
 import Search from './Search';
 
 describe('Search', () => {
   it('renders without errors', () => {
-    const wrapper = render(<Search />);
+    const wrapper = render(
+      <Provider store={store}>
+        <Search />
+      </Provider>
+    );
     expect(wrapper).toBeTruthy();
   });
   it('Renders not found placeholder in input', () => {
-    render(<Search />);
+    render(
+      <Provider store={store}>
+        <Search />
+      </Provider>
+    );
     expect(screen.getByPlaceholderText('Type to search'));
-  });
-  it('Renders found default value if Local Storage empty', () => {
-    localStorage.setItem('inputValue', '');
-    const storage = localStorage.getItem('inputValue');
-
-    render(<Search />);
-    if (storage?.length === 0) expect(screen.getByDisplayValue(''));
-  });
-  it('Renders not found default value if Local Storage has value', () => {
-    localStorage.setItem('inputValue', 'test');
-    const storageGet = localStorage.getItem('inputValue');
-
-    render(<Search />);
-    if (storageGet?.length !== 0) expect(screen.getByDisplayValue('test'));
   });
 });
